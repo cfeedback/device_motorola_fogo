@@ -57,3 +57,23 @@ BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := 25
 
 # inherit from the proprietary version
 include vendor/motorola/fogo/BoardConfigVendor.mk
+
+# Added based on Copilot recommendations
+# Recovery base
+TARGET_RECOVERY_FSTAB := device/motorola/fogo/recovery.fstab
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_CRYPTO_FBE_METADATA := true
+TW_INCLUDE_FASTBOOTD := true
+TW_USE_NEW_MINADBD := true
+
+# OrangeFox core
+FOX_BUILD_DEVICE := fogo
+FOX_USE_TWRP_RECOVERY := true
+FOX_USE_NANO_EDITOR := true
+FOX_USE_TAR_BINARY := true
+FOX_USE_XZ_UTILS := true
+FOX_USE_BASH := true
+FOX_USE_BUSYBOX := true
