@@ -5,4 +5,7 @@
 
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/calyx_fogo.mk \
-    $(LOCAL_DIR)/lineage_fogo.mk
+    $(LOCAL_DIR)/lineage_fogo.mk \
+
+# For OFOX recovery
+    $(LOCAL_DIR)/omni_fogo.mk
