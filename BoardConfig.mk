@@ -77,3 +77,8 @@ FOX_USE_TAR_BINARY := true
 FOX_USE_XZ_UTILS := true
 FOX_USE_BASH := true
 FOX_USE_BUSYBOX := true
+
+# DO I need these?
+#BOARD_USES_RECOVERY_AS_BOOT := false
+#BOARD_USES_INIT_BOOT := true
+BOARD_BOOT_HEADER_VERSION := 4  # or whatever fogo actually uses
