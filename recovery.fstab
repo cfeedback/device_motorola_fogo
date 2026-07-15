@@ -1,0 +1,7 @@
+/dev/block/bootdevice/by-name/system    /system     ext4    ro,barrier=1,discard    wait,logical
+/dev/block/bootdevice/by-name/vendor    /vendor     ext4    ro,barrier=1,discard    wait,logical
+/dev/block/bootdevice/by-name/product   /product    ext4    ro,barrier=1,discard    wait,logical
+
+/dev/block/bootdevice/by-name/metadata  /metadata   ext4    noatime,nosuid,nodev,barrier=1    wait,check,quota
+
+/dev/block/bootdevice/by-name/userdata  /data       f2fs    noatime,nosuid,nodev,discard      wait,check,quota,encryptable=footer
