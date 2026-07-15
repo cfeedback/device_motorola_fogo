@@ -59,15 +59,22 @@ BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := 25
 include vendor/motorola/fogo/BoardConfigVendor.mk
 
 # Added based on Copilot recommendations
+# OrangeFox recovery additions
+
 # Recovery base
 TARGET_RECOVERY_FSTAB := device/motorola/fogo/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 
+# Crypto
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_CRYPTO_FBE_METADATA := true
 TW_INCLUDE_FASTBOOTD := true
 TW_USE_NEW_MINADBD := true
+
+# Dynamic partitions / AVB helpers
+TW_INCLUDE_REPACKTOOLS := true
+TW_INCLUDE_LIBRESETPROP := true
 
 # OrangeFox core
 FOX_BUILD_DEVICE := fogo
@@ -77,8 +84,11 @@ FOX_USE_TAR_BINARY := true
 FOX_USE_XZ_UTILS := true
 FOX_USE_BASH := true
 FOX_USE_BUSYBOX := true
+FOX_ADVANCED_SECURITY := true
 
-# DO I need these?
-#BOARD_USES_RECOVERY_AS_BOOT := false
-#BOARD_USES_INIT_BOOT := true
-BOARD_BOOT_HEADER_VERSION := 4  # or whatever fogo actually uses
+# Moto boot chain
+BOARD_BOOT_HEADER_VERSION := 4
+
+# Recovery UI alignment
+TW_Y_OFFSET := 80
+TW_H_OFFSET := -80
