@@ -1,7 +1,33 @@
-/dev/block/bootdevice/by-name/system    /system     ext4    ro,barrier=1,discard    wait,logical
-/dev/block/bootdevice/by-name/vendor    /vendor     ext4    ro,barrier=1,discard    wait,logical
-/dev/block/bootdevice/by-name/product   /product    ext4    ro,barrier=1,discard    wait,logical
+# -------------------------
+# Dynamic partitions (logical)
+# -------------------------
 
-/dev/block/bootdevice/by-name/metadata  /metadata   ext4    noatime,nosuid,nodev,barrier=1    wait,check,quota
+system        /system        ext4    ro,discard                                 wait,logical
+system_ext    /system_ext    ext4    ro,discard                                 wait,logical
+product       /product       ext4    ro,discard                                 wait,logical
+vendor        /vendor        ext4    ro,discard                                 wait,logical
 
-/dev/block/bootdevice/by-name/userdata  /data       f2fs    noatime,nosuid,nodev,discard      wait,check,quota,encryptable=footer
+# -------------------------
+# Metadata (FBE metadata)
+# -------------------------
+
+/dev/block/bootdevice/by-name/metadata   /metadata   ext4    noatime,nosuid,nodev,discard,barrier=1    wait,check,quota
+
+# -------------------------
+# Userdata (FBE + wrappedkey_v0 + inlinecrypt)
+# -------------------------
+
+/dev/block/bootdevice/by-name/userdata   /data       f2fs    noatime,nosuid,nodev,discard,quota,encryptable=footer,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,metadata_encryption=aes-256-xts:wrappedkey_v0    wait,check
+
+# -------------------------
+# Persist partitions (optional mounts)
+# -------------------------
+
+/dev/block/bootdevice/by-name/persist       /mnt/vendor/persist     ext4    noatime,nosuid,nodev,barrier=1    wait
+/dev/block/bootdevice/by-name/prodpersist   /mnt/product/persist    ext4    noatime,nosuid,nodev,barrier=1    wait,nofail
+
+# -------------------------
+# Cache (if present)
+# -------------------------
+
+/dev/block/bootdevice/by-name/cache         /cache     ext4    noatime,nosuid,nodev,barrier=1    wait,check
