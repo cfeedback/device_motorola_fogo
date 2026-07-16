@@ -1,0 +1,47 @@
+name: OrangeFox Recovery Build (fogo)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev \
+          gcc-multilib g++-multilib libc6-dev-i386 libncurses5-dev x11proto-core-dev \
+          libx11-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig python3
+
+    - name: Get OrangeFox source
+      run: |
+        mkdir ofox && cd ofox
+        repo init -u https://gitlab.com/OrangeFox/manifest.git -b fox_12.1
+        repo sync -j$(nproc)
+
+    - name: Copy device & vendor trees
+      run: |
+        cp -r device/motorola/fogo ofox/device/motorola/fogo
+        cp -r vendor/motorola/fogo ofox/vendor/motorola/fogo
+        cp -r device/motorola/sm6375-common ofox/device/motorola/sm6375-common
+
+    - name: Build OrangeFox
+      run: |
+        cd ofox
+        . build/envsetup.sh
+        lunch omni_fogo-eng
+        mka recoveryimage -j$(nproc)
+
+    - name: Upload recovery image
+      uses: actions/upload-artifact@v3
+      with:
+        name: OrangeFox-fogo
+        path: ofox/out/target/product/fogo/recovery.img
